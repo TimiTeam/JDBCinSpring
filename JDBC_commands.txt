@@ -36,3 +36,8 @@ PRIMARY KEY (id))
   ---- The JdbcTemplate command to get the value in the column 'first_name'
 
 
+  select c.id, c.first_name, c.last_name, c.birth_date,
+  t.id as contact_tel_id, t.tel_type, t.tel_number from contact c
+  left join contact_tel_detail t on c.id = t.contact_id
+  ---- A command to query data from the parent and child tables
+

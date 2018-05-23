@@ -19,13 +19,13 @@ public class JdbcContactDaoSample {
         ContactDao contactDao = context.getBean("contactDao",ContactDao.class);
         LOGGER.info("The name of contact 1 is: "+contactDao.findFirstNameById(1L));
 
-        List<Contact> contacts = contactDao.getAll();
+        List<Contact> contactWithDetail = contactDao.findAllWithDetail();
         LOGGER.info("All contacts: ");
-        for(Contact c: contacts){
+        for(Contact c: contactWithDetail){
             LOGGER.info(c);
             if(c.getContactTelDetails() != null ){
                 for(ContactTelDetail detail: c.getContactTelDetails()){
-                    LOGGER.info(detail);
+                    LOGGER.info("----"+detail);
                 }
             }
         }
