@@ -2,6 +2,7 @@ package com.apress.prospring4.ch6.jdbcInSpring;
 
 
 import com.apress.prospring4.ch6.jdbcInJava.components.Contact;
+import com.apress.prospring4.ch6.jdbcInJava.components.ContactTelDetail;
 import com.apress.prospring4.ch6.jdbcInSpring.components.ContactDao;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +23,11 @@ public class JdbcContactDaoSample {
         LOGGER.info("All contacts: ");
         for(Contact c: contacts){
             LOGGER.info(c);
+            if(c.getContactTelDetails() != null ){
+                for(ContactTelDetail detail: c.getContactTelDetails()){
+                    LOGGER.info(detail);
+                }
+            }
         }
     }
 }

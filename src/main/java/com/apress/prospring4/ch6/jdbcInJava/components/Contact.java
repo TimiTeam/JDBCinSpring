@@ -67,6 +67,6 @@ public class Contact {
                 ", firstName: " + firstName +
                 ", lastName: " + lastName +
                 ", birthDate: " + birthDate +
-                ", contactTelDetails: " + contactTelDetails + "\n";
+                "\n";
     }
 }
