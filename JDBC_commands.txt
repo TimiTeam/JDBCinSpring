@@ -20,11 +20,19 @@ PRIMARY KEY (id))
     REFERENCES contact(id)
   ---- creating second table 'contact_tel_detail' with a one-to-many relationship
 
+
   insert into contact (first_name, last_name, birth_date) values
     ('Chris', 'Schaefer', '1981-05-03')
   ---- insert data in table 'contact'
 
+
   INSERT INTO contact_tel_detail(contact_id, tel_type, tel_number) VALUES(
-      2,'Home','1234567890'
+      2,'Home','1234567890')
   ---- insert in table 'contact_tel_detail'
-)
+
+
+  jdbcTemplate.queryForObject("SELECT first_name FROM contact WHERE id=?",
+                  new Object[]{id},String.class);
+  ---- The JdbcTemplate command to get the value in the column 'first_name'
+
+
