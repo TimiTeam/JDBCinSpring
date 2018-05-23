@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="com.mysql.jdbc.Driver"
+          p:url="jdbc:mysql://localhost:3306/timur_base?useLegacyDatetimeCode=false&amp;serverTimezone=UTC"
+          p:username="root"
+          p:password="root"/>
+    <!--<context:property-placeholder-->
+        <!--location="jdbc.properties"/>-->
+
+    <!--<bean id="dataSource"-->
+          <!--class="org.apache.commons.dbcp.BasicDataSource"-->
+          <!--destroy-method="close"-->
+          <!--p:driverClassName="${jdbc.driverClassName}"-->
+          <!--p:url="${jdbc.url}"-->
+          <!--p:username="${jdbc.username}"-->
+          <!--p:password="${jdbc.password}"/>-->
+
+    <!-- The '${...}' character to retrieve data from a file
+    that registers 'context:property-placeholder' -->
+
+
+    <bean id="contactDao" class="com.apress.prospring4.ch6.jdbcInSpring.components.JdbcContactDao"
+          p:dataSource-ref="dataSource"/>
+
+</beans>
