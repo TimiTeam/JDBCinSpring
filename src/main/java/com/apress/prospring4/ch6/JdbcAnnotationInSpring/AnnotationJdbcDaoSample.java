@@ -17,7 +17,11 @@ public class AnnotationJdbcDaoSample {
         ApplicationContext context = new ClassPathXmlApplicationContext("app-context-annotation.xml");
         ContactDao dao = context.getBean("contactDao",ContactDao.class);
 
-            List<Contact> contacts = dao.findAll();
+        listContacts(dao.findAll());
+
+        listContacts(dao.findByFirstName("Timur"));
+    }
+    private static void listContacts(List<Contact> contacts){
         for(Contact c: contacts) {
             LOGGER.info(c);
             if(c.getContactTelDetails() != null){

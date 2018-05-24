@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("contactDao")
 //This annotation instructs Spring to translate database-specific SQL exceptions
@@ -16,11 +18,13 @@ public class JdbcContactDao implements ContactDao{
 
     private DataSource dataSource;
     private SelectAllContacts selectAllContacts;
+    private SelectContactByFirstName byFirstName;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.selectAllContacts = new SelectAllContacts(dataSource);
+        this.byFirstName = new SelectContactByFirstName(dataSource);
     }
 
     public List<Contact> findAll() {
@@ -28,7 +32,9 @@ public class JdbcContactDao implements ContactDao{
     }
 
     public List<Contact> findByFirstName(String firstName) {
-        return null;
+        Map<String,Object> map =  new HashMap<String, Object>();
+        map.put("first_name",firstName);
+        return byFirstName.executeByNamedParam(map);
     }
 
     public String findFirstNameById(Long id) {
