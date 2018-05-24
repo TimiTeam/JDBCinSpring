@@ -2,6 +2,8 @@ package com.apress.prospring4.ch6.JdbcAnnotationInSpring.dao;
 
 import com.apress.prospring4.ch6.jdbcInJava.components.Contact;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ public class JdbcContactDao implements ContactDao{
     private SelectAllContacts selectAllContacts;
     private SelectContactByFirstName byFirstName;
     private UpdateContact updateContact;
+    private InsertContact insertContact;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -27,6 +30,7 @@ public class JdbcContactDao implements ContactDao{
         this.selectAllContacts = new SelectAllContacts(dataSource);
         this.byFirstName = new SelectContactByFirstName(dataSource);
         this.updateContact = new UpdateContact(dataSource);
+        this.insertContact = new InsertContact(dataSource);
     }
 
     public List<Contact> findAll() {
@@ -48,6 +52,14 @@ public class JdbcContactDao implements ContactDao{
     }
 
     public void insert(Contact contact) {
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("first_name",contact.getFirstName());
+        map.put("last_name",contact.getLastName());
+        map.put("birth_date",contact.getBirthDate());
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        insertContact.updateByNamedParam(map,keyHolder);
+        contact.setId(keyHolder.getKey().longValue());
 
     }
 

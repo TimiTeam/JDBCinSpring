@@ -7,9 +7,6 @@ import com.apress.prospring4.ch6.jdbcInJava.components.ContactTelDetail;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.sql.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class AnnotationJdbcDaoSample {
@@ -19,11 +16,10 @@ public class AnnotationJdbcDaoSample {
         ApplicationContext context = new ClassPathXmlApplicationContext("app-context-annotation.xml");
         ContactDao dao = context.getBean("contactDao",ContactDao.class);
 
-        Contact contact = new Contact("Timur","Bujalo",
-                "1996-12-22");
-        contact.setId(6L);
-
-        dao.update(contact);
+        Contact contact = new Contact("Natalia","Stucova",
+                "1983-09-11");
+        dao.insert(contact);
+        LOGGER.info(contact.getId());
 
         listContacts(dao.findAll());
 
