@@ -19,12 +19,14 @@ public class JdbcContactDao implements ContactDao{
     private DataSource dataSource;
     private SelectAllContacts selectAllContacts;
     private SelectContactByFirstName byFirstName;
+    private UpdateContact updateContact;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.selectAllContacts = new SelectAllContacts(dataSource);
         this.byFirstName = new SelectContactByFirstName(dataSource);
+        this.updateContact = new UpdateContact(dataSource);
     }
 
     public List<Contact> findAll() {
@@ -54,6 +56,24 @@ public class JdbcContactDao implements ContactDao{
     }
 
     public void update(Contact contact) {
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("first_name",contact.getFirstName());
+        map.put("last_name",contact.getLastName());
+        map.put("id",contact.getId());
+        map.put("birth_date",contact.getBirthDate());
 
+        updateContact.updateByNamedParam(map);
+        LOGGER.info("Update a contact with id: "+contact.getId());
     }
 }
+
+
+
+
+
+
+
+
+
+
+
