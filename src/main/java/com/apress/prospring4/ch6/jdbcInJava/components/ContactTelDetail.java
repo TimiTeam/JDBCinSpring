@@ -10,8 +10,7 @@ public class ContactTelDetail {
     public ContactTelDetail() {
     }
 
-    public ContactTelDetail(Long contactId, String telType, String telNumber) {
-        this.contactId = contactId;
+    public ContactTelDetail( String telType, String telNumber) {
         this.telType = telType;
         this.telNumber = telNumber;
     }

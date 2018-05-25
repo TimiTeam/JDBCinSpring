@@ -7,6 +7,8 @@ import com.apress.prospring4.ch6.jdbcInJava.components.ContactTelDetail;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnnotationJdbcDaoSample {
@@ -16,12 +18,26 @@ public class AnnotationJdbcDaoSample {
         ApplicationContext context = new ClassPathXmlApplicationContext("app-context-annotation.xml");
         ContactDao dao = context.getBean("contactDao",ContactDao.class);
 
-        Contact contact = new Contact("Natalia","Stucova",
-                "1983-09-11");
-        dao.insert(contact);
-        LOGGER.info(contact.getId());
+        Contact contact = new Contact("Alisa","Unknown","fsddsf");
 
-        listContacts(dao.findAll());
+        List<ContactTelDetail> contactTelDetailsList = new ArrayList<ContactTelDetail>();
+
+        ContactTelDetail telDetail = new ContactTelDetail();
+
+        telDetail.setTelNumber("0502314781");
+        telDetail.setTelType("Mobile");
+
+        contactTelDetailsList.add(telDetail);
+
+        telDetail = new ContactTelDetail("Home","5771436");
+
+        contactTelDetailsList.add(telDetail);
+
+        contact.setContactTelDetails(contactTelDetailsList);
+
+        dao.insertWithDetail(contact);
+
+        listContacts(dao.findAllWithDetail());
 
     }
     private static void listContacts(List<Contact> contacts){
